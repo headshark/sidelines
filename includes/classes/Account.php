@@ -14,6 +14,26 @@ class Account
         $this->validateUsername($username);
         $this->validateEmails($email, $confirmEmail);
         $this->validatePasswords($password, $confirmPassword);
+
+        if (empty($this->errorArray)) {
+            return $this->insertUserDetails($firstName, $lastName, $username, $email, $password);
+        }
+
+        return false;
+    }
+
+    private function insertUserDetails($firstName, $lastName, $username, $email, $password) {
+        $password = hash("sha512", $password);
+
+        $query = $this->conn->prepare("INSERT INTO users (first_name, last_name, username, email, password)
+            VALUES (:firstName, :lastName, :username, :email, :password)");
+        $query->bindValue(":firstName", $firstName);
+        $query->bindValue(":lastName", $lastName);
+        $query->bindValue(":username", $username);
+        $query->bindValue(":email", $email);
+        $query->bindValue(":password", $password);
+
+        return $query->execute();
     }
 
     private function validateFirstName($firstName) {
@@ -34,7 +54,7 @@ class Account
             return;
         }
 
-        $query = $this->conn->prepare("SELECT * FROM customer WHERE username=:username");
+        $query = $this->conn->prepare("SELECT * FROM users WHERE username=:username");
         $query->bindValue(":username", $username);
         $query->execute();
 
@@ -54,8 +74,8 @@ class Account
             return;
         }
 
-        $query = $this->conn->prepare("SELECT * FROM customer WHERE email=:email");
-        $query->bindValue(":email", $username);
+        $query = $this->conn->prepare("SELECT * FROM users WHERE email=:email");
+        $query->bindValue(":email", $email);
         $query->execute();
 
         if ($query->rowCount() != 0) {

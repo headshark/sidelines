@@ -15,7 +15,11 @@ if (isset($_POST["submitButton"])) {
     $password = FormSanitizer::sanitizeFormPassword($_POST["password"]);
     $confirmPassword = FormSanitizer::sanitizeFormPassword($_POST["confirmPassword"]);
 
-    $account->register($firstName, $lastName, $username, $email, $confirmEmail, $password, $confirmPassword);
+    $success = $account->register($firstName, $lastName, $username, $email, $confirmEmail, $password, $confirmPassword);
+
+    if ($success) {
+        header("Location: index.php");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -54,7 +58,7 @@ if (isset($_POST["submitButton"])) {
                     <?php echo $account->getError(Constants::$passwordLength); ?>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="password" name="confirmPassword" placeholder="Confirm password" required>
-                    
+
                     <input type="submit" name="submitButton" value="Submit">
                 </form>
 
