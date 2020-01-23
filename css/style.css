@@ -80,3 +80,9 @@ body {
 .sign-in-message:hover {
     text-decoration: underline;
 }
+
+.errorMessage {
+    color: #f00;
+    font-size: 12px;
+    font-weight: 400;
+}
