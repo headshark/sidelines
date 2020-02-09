@@ -31,7 +31,7 @@ function getInputValue($name) {
         <title>Sidelines - Watch Basketball Highlights</title>
     </head>
     <body>
-        <div class="sign-up-container">
+        <div class="signUpContainer">
             <div class="column">
                 <div class="header">
                     <img src="images/logo.png" alt="Site Logo" />
@@ -46,7 +46,7 @@ function getInputValue($name) {
                     <input type="submit" name="submitButton" value="Submit">
                 </form>
 
-                <a href="register.php" class="sign-in-message">Need an account? Sign up here!</a>
+                <a href="register.php" class="signInMessage">Need an account? Sign up here!</a>
             </div>
         </div>
     </body>
